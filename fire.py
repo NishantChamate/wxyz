@@ -3,14 +3,22 @@ import json
 import firebase_admin
 from firebase_admin import credentials, db
 
-# Load credentials from environment variable
-firebase_credentials = json.loads(os.getenv("FIREBASE_CREDENTIALS"))
+# Load Firebase credentials from GitHub Secrets
+firebase_credentials = os.getenv("FIREBASE_CREDENTIALS")
 
+if firebase_credentials is None:
+    raise ValueError("Missing FIREBASE_CREDENTIALS environment variable.")
+
+# Convert JSON string to dictionary
+firebase_credentials = json.loads(firebase_credentials)
+
+# Initialize Firebase with credentials
 cred = credentials.Certificate(firebase_credentials)
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://hello-90594-default-rtdb.asia-southeast1.firebasedatabase.app/'
 })
 
+print("✅ Firebase initialized successfully!")
 
 def save_calculation(operation, num1, num2, result):
     # Reference to the database
