@@ -1,11 +1,23 @@
 import firebase_admin
 from firebase_admin import credentials, db
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 def initialize_firebase():
+    # Get Firebase credentials and database URL from environment variables
+    firebase_credentials = os.getenv('FIREBASE_CREDENTIALS')
+    database_url = os.getenv('FIREBASE_DATABASE_URL')
+
+    if not firebase_credentials or not database_url:
+        raise ValueError("Missing Firebase credentials or database URL in environment variables.")
+
     # Initialize the Firebase Admin SDK
-    cred = credentials.Certificate('Cre.json')
+    cred = credentials.Certificate(firebase_credentials)
     firebase_admin.initialize_app(cred, {
-        'databaseURL': 'https://hello-90594-default-rtdb.asia-southeast1.firebasedatabase.app/'
+        'databaseURL': database_url
     })
 
 def save_calculation(operation, num1, num2, result):

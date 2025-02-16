@@ -1,0 +1,21 @@
+# Ignore environment variables and Firebase credentials
+.env
+firebase_credentials.json
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment (if using venv)
+venv/
+.env/
+
+# Ignore system files (Windows-specific)
+Thumbs.db
+desktop.ini
+
+# Ignore logs and temporary files
+logs/
+*.log
