@@ -7,7 +7,7 @@ def initialize_firebase():
     """ Initialize Firebase using credentials from GitHub Secrets """
     firebase_credentials = os.getenv("FIREBASE_CREDENTIALS")
 
-    if firebase_credentials is None:
+    if not firebase_credentials:
         raise ValueError("❌ Missing FIREBASE_CREDENTIALS environment variable.")
 
     # Convert JSON string to dictionary
@@ -69,7 +69,7 @@ def calculator():
     else:
         print("❌ Invalid input. Please enter a valid choice.")
 
-# ✅ Correctly calling `initialize_firebase()`
+# ✅ Call initialize_firebase() correctly
 if __name__ == "__main__":
-    initialize_firebase()  # ✅ This function is now properly defined
+    initialize_firebase()  # Now properly defined before calling it
     calculator()
