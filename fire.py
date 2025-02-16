@@ -69,6 +69,7 @@ def calculator():
     else:
         print("❌ Invalid input. Please enter a valid choice.")
 
+# ✅ Only call functions inside `if __name__ == "__main__"`
 if __name__ == "__main__":
-    initialize_firebase()  # Now this function exists and is properly defined
+    initialize_firebase()  # This is defined properly now
     calculator()
