@@ -1,31 +1,15 @@
-print(f"FIREBASE_CREDENTIALS found: {os.getenv('FIREBASE_CREDENTIALS') is not None}")
-
-
-import os
-import json
 import firebase_admin
 from firebase_admin import credentials, db
 
 def initialize_firebase():
-    """ Initialize Firebase using credentials from GitHub Secrets """
-    firebase_credentials = os.getenv("FIREBASE_CREDENTIALS")
-
-    if not firebase_credentials:
-        raise ValueError("❌ Missing FIREBASE_CREDENTIALS environment variable.")
-
-    # Convert JSON string to dictionary
-    firebase_credentials = json.loads(firebase_credentials)
-
-    # Initialize Firebase with credentials
-    cred = credentials.Certificate(firebase_credentials)
+    # Initialize the Firebase Admin SDK
+    cred = credentials.Certificate('Cre.json')
     firebase_admin.initialize_app(cred, {
         'databaseURL': 'https://hello-90594-default-rtdb.asia-southeast1.firebasedatabase.app/'
     })
 
-    print("✅ Firebase initialized successfully!")
-
 def save_calculation(operation, num1, num2, result):
-    """ Save the calculation result to Firebase Realtime Database """
+    # Reference to the database
     ref = db.reference('/calculations')
     new_entry = ref.push()
     new_entry.set({
@@ -34,10 +18,9 @@ def save_calculation(operation, num1, num2, result):
         'num2': num2,
         'result': result
     })
-    print("✅ Calculation saved successfully!")
+    print("Calculation saved successfully!")
 
 def calculator():
-    """ Simple Calculator for Addition, Subtraction, Multiplication, and Division """
     print("Simple Calculator")
     print("Select operation:")
     print("1. Addition")
@@ -62,17 +45,16 @@ def calculator():
             operation = 'Multiplication'
         elif choice == '4':
             if num2 == 0:
-                print("❌ Error: Division by zero is not allowed.")
+                print("Error: Division by zero is not allowed.")
                 return
             result = num1 / num2
             operation = 'Division'
         
-        print(f"✅ Result: {result}")
+        print(f"Result: {result}")
         save_calculation(operation, num1, num2, result)
     else:
-        print("❌ Invalid input. Please enter a valid choice.")
+        print("Invalid input. Please enter a valid choice.")
 
-# ✅ Call initialize_firebase() correctly
 if __name__ == "__main__":
-    initialize_firebase()  # Now properly defined before calling it
+    initialize_firebase()
     calculator()
