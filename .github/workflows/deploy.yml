@@ -1,27 +1,35 @@
-name: Deploy Firebase App
+name: Run Firebase Calculator
 
-on:
+on: 
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
 jobs:
-  deploy:
+  run-calculator:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.9'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
 
-      - name: Install Dependencies
-        run: pip install firebase-admin
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install firebase-admin
 
-      - name: Run Script with GitHub Secrets
-        env:
-          FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
-        run: python fire.py
+    - name: Set up Firebase Credentials
+      run: echo "$FIREBASE_CREDENTIALS" > firebase_creds.json
+      env:
+        FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
+
+    - name: Run Firebase Calculator Script
+      run: python fire.py
