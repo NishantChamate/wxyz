@@ -1,3 +1,6 @@
+print(f"FIREBASE_CREDENTIALS found: {os.getenv('FIREBASE_CREDENTIALS') is not None}")
+
+
 import os
 import json
 import firebase_admin
