@@ -24,4 +24,4 @@ jobs:
       - name: Run Script with GitHub Secrets
         env:
           FIREBASE_CREDENTIALS: ${{ secrets.FIREBASE_CREDENTIALS }}
-        run: python main.py
+        run: python fire.py
